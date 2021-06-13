@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatTableModule} from "@angular/material/table";
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import {MatButtonModule} from "@angular/material/button";
     HttpClientModule,
     MatIconModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatGridListModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
