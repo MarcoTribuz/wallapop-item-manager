@@ -10,6 +10,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BadgeFavoriteComponent } from './badge-favorite/badge-favorite.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
