@@ -3,5 +3,6 @@ export interface Item {
   description: String,
   price: String,
   email: String,
-  image: String
+  image: String,
+  favorite: Boolean
 }

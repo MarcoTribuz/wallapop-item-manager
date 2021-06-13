@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import {Item} from "../../interfaces/item";
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {Items} from "../../interfaces/items";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,19 +12,20 @@ export class ItemService {
   private itemsUrl = 'https://frontend-tech-test-data.s3.eu-west-1.amazonaws.com/items.json';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.itemsUrl).pipe(
-      map((i) => i.items),
-      tap((i) => {
-        console.log(i)
-      }),
-      catchError(this.handleError<Item[]>('getItems', []))
-  )
+  getItems(): Observable<Items> {
+    return this.http.get<Items>(this.itemsUrl).pipe(
+      catchError(this.handleError<Items>('getItems', {items: []}))
+    )
+  }
+
+  setFavorite(id: Number){
+
   }
 
   private log(message: string) {
