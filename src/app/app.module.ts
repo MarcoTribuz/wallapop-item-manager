@@ -15,6 +15,9 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTableModule} from "@angular/material/table";
+import { ColorThemePickerComponent } from './color-theme-picker/color-theme-picker.component';
+import {MatMenuModule} from "@angular/material/menu";
+import { LazyLoadDirective } from './directives/lazy-load.directive';
 
 
 @NgModule({
@@ -24,18 +27,21 @@ import {MatTableModule} from "@angular/material/table";
     TableComponent,
     SearchFieldComponent,
     NavbarComponent,
-    BadgeFavoriteComponent
+    BadgeFavoriteComponent,
+    ColorThemePickerComponent,
+    LazyLoadDirective
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatTableModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatTableModule,
+        MatMenuModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

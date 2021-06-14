@@ -10,7 +10,7 @@ import {ItemService} from "../services/item/item.service";
 export class TableComponent implements OnInit {
 
   items: Item[] = [];
-  displayedColumns: string[] = ['title', 'description', 'price', 'email'];
+  displayedColumns: string[] = ['title', 'description', 'price', 'email', 'image', 'favorite'];
 
   constructor(private itemService: ItemService) { }
 
@@ -20,13 +20,17 @@ export class TableComponent implements OnInit {
 
   getItems(): void {
     this.itemService.getItems().subscribe((i) => {
-      console.log("Observable", i.items)
-      this.items = i.items
+      console.log("E", i)
+      this.items = i
     })
   }
 
   selectedItem(item: Item){
-    console.log(item)
+    console.log("SelectedItem", item)
+  }
+
+  applyFavorite(item: Item) {
+    console.log("Favorite", item)
   }
 
 }

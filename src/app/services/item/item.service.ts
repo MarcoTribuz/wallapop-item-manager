@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Items} from "../../interfaces/items";
+import {Item} from "../../interfaces/item";
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +19,27 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
-  getItems(): Observable<Items> {
+  getItems(): Observable<Item[]> {
     return this.http.get<Items>(this.itemsUrl).pipe(
-      catchError(this.handleError<Items>('getItems', {items: []}))
+      map((i: Items) => {
+        console.log(i.items)
+        return i.items.map((i) => {
+          return Object.assign({favorite: false}, i)
+        })
+      }),
+      catchError(this.handleError<Item[]>('getItems', []))
     )
   }
 
   setFavorite(id: Number){
 
   }
+
+  unsetFavorite(id: Number){
+
+  }
+
+
 
   private log(message: string) {
     console.log("Message", message)
