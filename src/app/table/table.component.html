@@ -33,7 +33,7 @@
   <ng-container matColumnDef="favorite">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button class="buttonFavorite" [color]="element.favorite ? 'warn' : 'basic'" aria-label="favorite">
+      <button mat-icon-button aria-label="favorite">
         <mat-icon>{{element.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
       </button>
     </td>

@@ -18,6 +18,8 @@ import {MatTableModule} from "@angular/material/table";
 import { ColorThemePickerComponent } from './color-theme-picker/color-theme-picker.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { LazyLoadDirective } from './directives/lazy-load.directive';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 
 @NgModule({
@@ -31,17 +33,19 @@ import { LazyLoadDirective } from './directives/lazy-load.directive';
     ColorThemePickerComponent,
     LazyLoadDirective
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatTableModule,
-        MatMenuModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatTableModule,
+    MatMenuModule,
+    FlexLayoutModule,
+    MatFormFieldModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

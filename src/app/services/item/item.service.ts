@@ -23,7 +23,7 @@ export class ItemService {
     return this.http.get<Items>(this.itemsUrl).pipe(
       map((i: Items) => {
         console.log(i.items)
-        return i.items.map((i) => {
+        return i.items.map((i, index) => {
           return Object.assign({favorite: false}, i)
         })
       }),
@@ -31,15 +31,19 @@ export class ItemService {
     )
   }
 
-  setFavorite(id: Number){
+  setFavorite(id: Number): void{
 
   }
 
-  unsetFavorite(id: Number){
+  unsetFavorite(id: Number): void {
 
   }
 
-
+  searchItem(value: string): Observable<[]> {
+    console.log("Service", value)
+    if (!value.trim()) return of([])
+    return of([])
+  }
 
   private log(message: string) {
     console.log("Message", message)

@@ -20,7 +20,6 @@ export class TableComponent implements OnInit {
 
   getItems(): void {
     this.itemService.getItems().subscribe((i) => {
-      console.log("E", i)
       this.items = i
     })
   }
