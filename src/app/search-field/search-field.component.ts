@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ItemService} from "../services/item/item.service";
-import { Observable, Subject } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
@@ -16,11 +16,10 @@ export class SearchFieldComponent implements OnInit {
   heroes$!: Observable<Item[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private itemService: ItemService) {}
+  constructor(private heroService: ItemService) {}
 
   // Push a search term into the observable stream.
   search(term: string): void {
-    console.log("search", term)
     this.searchTerms.next(term);
   }
 
@@ -30,10 +29,12 @@ export class SearchFieldComponent implements OnInit {
       debounceTime(300),
 
       // ignore new term if same as previous term
-      //distinctUntilChanged(),
+      distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.itemService.searchItem(term)),
+      switchMap((term: string) => {
+        console.log("Porco", term)
+        return of([])}),
     );
   }
 

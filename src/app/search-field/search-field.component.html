@@ -1,4 +1,4 @@
 <mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input #searchField matInput (keyup)="search(searchField.value)" placeholder="Search Something" #input>
+  <mat-label>Search something</mat-label>
+  <input #searchField matInput (input)="search(searchField.value)" placeholder="Search Something">
 </mat-form-field>

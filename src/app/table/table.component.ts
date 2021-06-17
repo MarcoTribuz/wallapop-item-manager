@@ -20,16 +20,13 @@ export class TableComponent implements OnInit {
 
   getItems(): void {
     this.itemService.getItems().subscribe((i) => {
+      console.log("Subscribe", i)
       this.items = i
     })
   }
 
-  selectedItem(item: Item){
-    console.log("SelectedItem", item)
+  switchFavourite(id: number): void{
+    console.log("switchFavourite", id)
+    this.itemService.switchFavorite(id)
   }
-
-  applyFavorite(item: Item) {
-    console.log("Favorite", item)
-  }
-
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Items} from "../../interfaces/items";
@@ -10,11 +10,9 @@ import {Item} from "../../interfaces/item";
 })
 export class ItemService {
 
-  private itemsUrl = 'https://frontend-tech-test-data.s3.eu-west-1.amazonaws.com/items.json';
+  subject = new BehaviorSubject([]);
 
-  httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
-  };
+  private itemsUrl = 'https://frontend-tech-test-data.s3.eu-west-1.amazonaws.com/items.json';
 
   constructor(private http: HttpClient) {
   }
@@ -22,17 +20,16 @@ export class ItemService {
   getItems(): Observable<Item[]> {
     return this.http.get<Items>(this.itemsUrl).pipe(
       map((i: Items) => {
-        console.log(i.items)
         return i.items.map((i, index) => {
-          return Object.assign({favorite: false}, i)
+          return {...i, id: index, favorite: false}
         })
       }),
       catchError(this.handleError<Item[]>('getItems', []))
     )
   }
 
-  setFavorite(id: Number): void{
-
+  switchFavorite(id: Number): void{
+    console.log("ca")
   }
 
   unsetFavorite(id: Number): void {
