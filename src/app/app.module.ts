@@ -20,6 +20,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import { LazyLoadDirective } from './directives/lazy-load.directive';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatMenuModule,
     FlexLayoutModule,
     MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
