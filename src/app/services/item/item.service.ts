@@ -1,57 +1,46 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
-import {Items} from "../../interfaces/items";
-import {Item} from "../../interfaces/item";
+import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
+import {IItems} from "../../interfaces/IItems";
+import {IItem} from "../../interfaces/IItem";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ItemService {
 
-  subject = new BehaviorSubject([]);
+  private _itemsList: BehaviorSubject<any> = new BehaviorSubject([]);
+  private _itemsListFiltered: BehaviorSubject<any> = new BehaviorSubject([]);
+  public itemsList$ = this._itemsList.asObservable()
 
   private itemsUrl = 'https://frontend-tech-test-data.s3.eu-west-1.amazonaws.com/items.json';
 
   constructor(private http: HttpClient) {
   }
 
-  getItems(): Observable<Item[]> {
-    return this.http.get<Items>(this.itemsUrl).pipe(
-      map((i: Items) => {
+  switchFavorite(item: IItem): void{
+    item.favorite = !item.favorite
+  }
+
+  searchItem(value: string): void {
+    const itemsList = this._itemsListFiltered.getValue()
+    const filtered = itemsList.filter((it: IItem) => it.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()))
+    this._itemsList.next(filtered)
+  }
+
+  fetchItems(): void {
+    this.http.get<IItems>(this.itemsUrl).pipe(
+      map((i: IItems) => {
         return i.items.map((i, index) => {
-          return {...i, id: index, favorite: false}
+          return {...i, favorite: false}
         })
       }),
-      catchError(this.handleError<Item[]>('getItems', []))
-    )
+      tap((i: IItem[]) => {
+        this._itemsList.next(i)
+        this._itemsListFiltered.next(i)
+      }),
+    ).subscribe()
   }
-
-  switchFavorite(id: Number): void{
-    console.log("ca")
-  }
-
-  unsetFavorite(id: Number): void {
-
-  }
-
-  searchItem(value: string): Observable<[]> {
-    console.log("Service", value)
-    if (!value.trim()) return of([])
-    return of([])
-  }
-
-  private log(message: string) {
-    console.log("Message", message)
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      this.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
-  }
-
 }

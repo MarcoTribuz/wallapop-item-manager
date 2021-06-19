@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from './layout/layout.component';
 import { TableComponent } from './table/table.component';
-import { SearchFieldComponent } from './search-field/search-field.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BadgeFavoriteComponent } from './badge-favorite/badge-favorite.component';
 
@@ -21,6 +20,8 @@ import { LazyLoadDirective } from './directives/lazy-load.directive';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { SearchFieldComponent } from './search-field/search-field.component';
 
 
 @NgModule({
@@ -28,11 +29,12 @@ import {MatInputModule} from "@angular/material/input";
     AppComponent,
     LayoutComponent,
     TableComponent,
-    SearchFieldComponent,
     NavbarComponent,
     BadgeFavoriteComponent,
     ColorThemePickerComponent,
-    LazyLoadDirective
+    LazyLoadDirective,
+    SearchFieldComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import {MatInputModule} from "@angular/material/input";
     MatMenuModule,
     FlexLayoutModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

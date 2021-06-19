@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Item} from "../interfaces/item";
+import {Component, OnInit} from '@angular/core';
+import {IItem} from "../interfaces/IItem";
 import {ItemService} from "../services/item/item.service";
 
 @Component({
@@ -9,24 +9,25 @@ import {ItemService} from "../services/item/item.service";
 })
 export class TableComponent implements OnInit {
 
-  items: Item[] = [];
+  items: IItem[] = [];
   displayedColumns: string[] = ['title', 'description', 'price', 'email', 'image', 'favorite'];
 
-  constructor(private itemService: ItemService) { }
+  //todo unsubscribe
+  constructor(private itemService: ItemService) {
+  }
 
   ngOnInit(): void {
-    this.getItems()
-  }
-
-  getItems(): void {
-    this.itemService.getItems().subscribe((i) => {
-      console.log("Subscribe", i)
+    this.itemService.itemsList$.subscribe((i) => {
+      console.log("ciao", i)
       this.items = i
     })
+    this.itemService.fetchItems()
   }
 
-  switchFavourite(id: number): void{
-    console.log("switchFavourite", id)
-    this.itemService.switchFavorite(id)
+  ngOnDestroy(): void {
+  }
+
+  switchFavourite(item: IItem): void{
+    this.itemService.switchFavorite(item)
   }
 }

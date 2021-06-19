@@ -1,4 +1,4 @@
-export interface Item {
+export interface IItem {
   id: Number,
   title: String,
   description: String,
