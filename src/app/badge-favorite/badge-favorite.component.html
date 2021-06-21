@@ -1,3 +1,14 @@
-<button id="showFavoriteDialog" mat-icon-button aria-label="Show Favorite" (click)="openDialog()">
-  <mat-icon matBadge="{{favoriteQuantity}}">favorite</mat-icon>
+<button
+  id="showFavoriteDialog"
+  mat-icon-button
+  aria-label="Show Favorite"
+  matTooltip="Show Favourites"
+  matTooltipPosition="left"
+  matTooltipHideDelay="5000"
+  (click)="openDialog()">
+  <mat-icon matBadge="{{favoriteQuantity}}"
+            matBadgeSize="small"
+            matBadgeColor="warn"
+            matBadgePosition="above before">favorite
+  </mat-icon>
 </button>
