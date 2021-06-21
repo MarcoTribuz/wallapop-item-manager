@@ -16,7 +16,7 @@ export class SearchFieldComponent implements OnInit {
   }
 
   search(value: string): void {
-    this.itemService.searchItem(value, this.isFavorite)
+    this.isFavorite ? this.itemService.searchFavorite(value) : this.itemService.search(value)
   }
 
 }

@@ -13,40 +13,78 @@ export class ItemService {
 
   private _itemsList: BehaviorSubject<any> = new BehaviorSubject([]);
   private _favoriteItemsList: BehaviorSubject<any> = new BehaviorSubject([]);
+  private _defaultFavoriteItemsList: BehaviorSubject<any> = new BehaviorSubject([]);
   private _defaultItemsList: BehaviorSubject<any> = new BehaviorSubject([]);
   private itemPerPage: number = 5
-  private actualPageDashboard: number = 1
-  private actualPageFavorite: number = 1
+  private startPositionDashboard: number = 0
+  private startPositionFavorite: number = 0
   private itemsUrl = 'https://frontend-tech-test-data.s3.eu-west-1.amazonaws.com/items.json';
-  private isFavoriteModal: boolean = false
   private searchedValueDashboard: string = ''
   private searchedValueFavorite: string = ''
 
   public itemsList$ = this._itemsList.asObservable()
   public favoriteItemsList$ = this._favoriteItemsList.asObservable()
+  public favoriteDefaultItemsList$ = this._defaultFavoriteItemsList.asObservable()
   public defaultItemsList$ = this._defaultItemsList.asObservable()
 
   constructor(private http: HttpClient) {
   }
 
-  switchFavorite(item: IItem, isFavorite: boolean = false): void{
+  switchFavorite(item: IItem): void {
     item.favorite = !item.favorite
-    const actualResearch = this.getSearchedValue(isFavorite)
-    this.searchItem(actualResearch, isFavorite)
+    this.updateFavoriteDefaultList()
+    this.searchItem()
+    this.searchItemFavorite()
   }
 
-  searchItem(value: string, isFavorite: boolean = false): void {
-    this.setSearchedValue(value, isFavorite)
+  search(value: string): void {
+    this.setSearchedValue(value, false)
+    this.searchItem()
+  }
+
+  searchFavorite (value: string): void {
+    this.setSearchedValue(value, true)
+    this.searchItemFavorite()
+  }
+
+  searchItem(): void {
     const itemsList = this._defaultItemsList.getValue()
-    const actualResearch = this.getSearchedValue(isFavorite)
-    const filtered = itemsList.filter((it: IItem) => it.title.toLocaleLowerCase().includes(actualResearch.toLocaleLowerCase()))
-    const slicedList = filtered.slice(0, this.itemPerPage)
-    this.updateBehaviourSubjects(slicedList, isFavorite)
+    const searchedValue = this.getSearchedValue(false)
+    const filtered = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => it.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()))
+    const startPosition = this.getStartPosition(false)
+    if (startPosition >= itemsList.length || startPosition < 0) return
+    const itemsPerPage = this.getItemPerPage()
+    const slicedList = filtered.slice(startPosition, startPosition + itemsPerPage)
+    this.updateDashBoardBehaviourSubjects(slicedList)
   }
 
-  updateBehaviourSubjects(itemsArray: IItem[], isFavorite: boolean = false) {
-    isFavorite ? this._favoriteItemsList.next(itemsArray) : this._itemsList.next(itemsArray)
+  searchItemFavorite (): void {
+    const itemsFavoriteList = this._defaultFavoriteItemsList.getValue()
+    const searchedValue = this.getSearchedValue(true)
+    const filteredFavorite = searchedValue === '' ? itemsFavoriteList : itemsFavoriteList.filter((it: IItem) => it.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()))
+    const startPosition = this.getStartPosition(true)
+    if (startPosition > itemsFavoriteList.length || startPosition < 0) return
+    const itemsPerPage = this.getItemPerPage()
+    const slicedList = filteredFavorite.slice(startPosition, startPosition + itemsPerPage)
+    this.updateFavoriteBehaviourSubject(slicedList)
+  }
+
+  updateDashBoardBehaviourSubjects(items: IItem[]) {
+    this._itemsList.next(items)
     this._defaultItemsList.next(this._defaultItemsList.getValue())
+  }
+
+  updateFavoriteBehaviourSubject(items: IItem[]) {
+    const itemsList = this._defaultItemsList.getValue()
+    const favorite = itemsList.filter((i: IItem) => i.favorite)
+    this._favoriteItemsList.next(items)
+    this._defaultFavoriteItemsList.next(favorite)
+  }
+
+  updateFavoriteDefaultList(): void {
+    const itemsList = this._defaultItemsList.getValue()
+    const favorite = itemsList.filter((i: IItem) => i.favorite)
+    this._defaultFavoriteItemsList.next(favorite)
   }
 
   fetchItems(): void {
@@ -59,27 +97,17 @@ export class ItemService {
         })
       }),
       tap((i: IItem[]) => {
+        console.log("items", i)
         this._itemsList.next(i.slice(0, this.itemPerPage))
-        this._favoriteItemsList.next(i.slice(0, this.itemPerPage))
+        this._favoriteItemsList.next([])
+        this._defaultFavoriteItemsList.next([])
         this._defaultItemsList.next(i)
       }),
     ).subscribe()
   }
 
-  setItemPerPage(itemsQuantityPerPage: number, isFavorite: boolean = false): void {
-    this.itemPerPage = itemsQuantityPerPage
-    const actualResearch = this.getSearchedValue(isFavorite)
-    this.searchItem(actualResearch, isFavorite)
-  }
-
   getItemPerPage(): number {
     return this.itemPerPage
-  }
-
-  setPageDashboard(page: number): void {
-    if (page > 0) this.actualPageDashboard = page;
-    const actualResearch = this.getSearchedValue()
-    this.searchItem(actualResearch)
   }
 
   setSearchedValue(value: string, isFavorite: boolean = false): void {
@@ -88,5 +116,30 @@ export class ItemService {
 
   getSearchedValue(isFavorite: boolean = false): string {
     return isFavorite ? this.searchedValueFavorite : this.searchedValueDashboard
+  }
+
+  nextPage(isFavorite: boolean): void {
+    const start = this.getStartPosition(isFavorite)
+    const itemPerPage = this.getItemPerPage()
+    const itemsList = isFavorite ? this._defaultFavoriteItemsList.getValue() : this._defaultItemsList.getValue()
+    if (start >= itemsList.length || (start + itemPerPage) >= itemsList.length) return
+    this.setStartPosition(start + itemPerPage, isFavorite)
+    isFavorite ? this.searchItemFavorite() : this.searchItem()
+  }
+
+  prevPage(isFavorite: boolean): void {
+    const start = this.getStartPosition(isFavorite)
+    const itemPerPage = this.getItemPerPage()
+    if (start === 0) return
+    this.setStartPosition(start - itemPerPage, isFavorite)
+    isFavorite ? this.searchItemFavorite() : this.searchItem()
+  }
+
+  getStartPosition(isFavorite: boolean): number {
+    return isFavorite ? this.startPositionFavorite : this.startPositionDashboard
+  }
+
+  setStartPosition(startPosition: number, isFavorite: boolean = false): void {
+    isFavorite ? this.startPositionFavorite = startPosition : this.startPositionDashboard = startPosition
   }
 }

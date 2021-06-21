@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
   }
 
   openDialog(event: boolean): void {
-    console.log("Event Navbar", event)
     this.openDialogEvent.emit(event)
   }
 

@@ -15,14 +15,12 @@ export class BadgeFavoriteComponent implements OnInit {
   constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.itemService.defaultItemsList$.subscribe((items: IItem[]) => {
-      console.log("ba", items)
-      this.favoriteQuantity = items.filter((i) => i.favorite).length
+    this.itemService.favoriteDefaultItemsList$.subscribe((items: IItem[]) => {
+      this.favoriteQuantity = items.length
     })
   }
 
   openDialog(): void{
-    console.log("openDialog")
     this.openDialogEvent.emit(true)
   }
 

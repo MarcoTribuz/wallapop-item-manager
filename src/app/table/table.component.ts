@@ -22,7 +22,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this.isFavorite ? this.displayedColumns = ['title', 'image', 'favorite'] : this.displayedColumns = ['title', 'description', 'price', 'email', 'image', 'favorite'];
     if (this.isFavorite)
       this.itemService.favoriteItemsList$.subscribe((items: IItem[]) => {
-        this.items = items.filter((i:IItem) => i.favorite)
+        this.items = items
       })
     else
       this.itemService.itemsList$.subscribe((items: IItem[]) => {
@@ -35,6 +35,14 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   switchFavourite(item: IItem): void {
-    this.itemService.switchFavorite(item, this.isFavorite)
+    this.itemService.switchFavorite(item)
+  }
+
+  nextPage(): void {
+    this.itemService.nextPage(this.isFavorite)
+  }
+
+  prevPage(): void {
+    this.itemService.prevPage(this.isFavorite)
   }
 }

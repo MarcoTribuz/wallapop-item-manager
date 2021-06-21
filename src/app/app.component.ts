@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ItemService} from "./services/item/item.service";
-import {IItem} from "./interfaces/IItem";
 import {MatDialog} from "@angular/material/dialog";
 import {FavoriteDialogComponent} from "./favorite-dialog/favorite-dialog.component";
 
@@ -19,7 +17,6 @@ export class AppComponent implements OnInit{
   }
 
   openDialog(value: boolean): void {
-    console.log("Navbar", value)
     this.dialog.open(FavoriteDialogComponent);
   }
 
