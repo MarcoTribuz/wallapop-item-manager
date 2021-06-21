@@ -1,4 +1,4 @@
 <mat-form-field class="example-full-width">
-  <mat-label>Favorite food</mat-label>
+  <mat-label>Search {{isFavorite ? 'your favorite items' : 'your items' }}</mat-label>
   <input matInput #searchBox id="search-box" (input)="search(searchBox.value)" />
 </mat-form-field>

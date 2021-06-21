@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ItemService} from "../services/item/item.service";
+import {IItem} from "../interfaces/IItem";
 
 @Component({
   selector: 'app-badge-favorite',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BadgeFavoriteComponent implements OnInit {
 
-  constructor() { }
+  favoriteQuantity: number = 0
+  @Output() openDialogEvent = new EventEmitter<boolean>();
+
+  constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
+    this.itemService.defaultItemsList$.subscribe((items: IItem[]) => {
+      console.log("ba", items)
+      this.favoriteQuantity = items.filter((i) => i.favorite).length
+    })
+  }
+
+  openDialog(): void{
+    console.log("openDialog")
+    this.openDialogEvent.emit(true)
   }
 
 }

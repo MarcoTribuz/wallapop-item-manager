@@ -1,33 +1,40 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {IItem} from "../interfaces/IItem";
 import {ItemService} from "../services/item/item.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
 
+  @Input() isFavorite: boolean = false;
   items: IItem[] = [];
-  displayedColumns: string[] = ['title', 'description', 'price', 'email', 'image', 'favorite'];
 
-  //todo unsubscribe
-  constructor(private itemService: ItemService) {
+  displayedColumns: string[] = []
+
+  constructor(public itemService: ItemService) {
   }
 
   ngOnInit(): void {
-    this.itemService.itemsList$.subscribe((i) => {
-      console.log("ciao", i)
-      this.items = i
-    })
+    this.isFavorite ? this.displayedColumns = ['title', 'image', 'favorite'] : this.displayedColumns = ['title', 'description', 'price', 'email', 'image', 'favorite'];
+    if (this.isFavorite)
+      this.itemService.favoriteItemsList$.subscribe((items: IItem[]) => {
+        this.items = items.filter((i:IItem) => i.favorite)
+      })
+    else
+      this.itemService.itemsList$.subscribe((items: IItem[]) => {
+        this.items = items
+      })
     this.itemService.fetchItems()
   }
 
   ngOnDestroy(): void {
   }
 
-  switchFavourite(item: IItem): void{
-    this.itemService.switchFavorite(item)
+  switchFavourite(item: IItem): void {
+    this.itemService.switchFavorite(item, this.isFavorite)
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ItemService} from "../services/item/item.service";
 
 @Component({
@@ -8,14 +8,15 @@ import {ItemService} from "../services/item/item.service";
 })
 export class SearchFieldComponent implements OnInit {
 
+  @Input() isFavorite: boolean = false;
+
   constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
   }
 
   search(value: string): void {
-    console.log("search Field", value)
-    this.itemService.searchItem(value)
+    this.itemService.searchItem(value, this.isFavorite)
   }
 
 }
