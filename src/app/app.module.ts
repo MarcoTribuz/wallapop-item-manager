@@ -23,6 +23,7 @@ import {SearchFieldComponent} from './search-field/search-field.component';
 import {MatBadgeModule} from "@angular/material/badge";
 import {FavoriteDialogComponent} from './favorite-dialog/favorite-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -35,23 +36,24 @@ import {MatDialogModule} from "@angular/material/dialog";
     SearchFieldComponent,
     FavoriteDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatTableModule,
-    MatMenuModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatBadgeModule,
-    MatDialogModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatTableModule,
+        MatMenuModule,
+        FlexLayoutModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatBadgeModule,
+        MatDialogModule,
+        MatTooltipModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

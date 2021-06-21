@@ -33,7 +33,7 @@
   <ng-container matColumnDef="favorite">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button aria-label="favorite"
+      <button mat-icon-button aria-label="favorite" class="favorite"
               (click)="switchFavourite(element)"
       >
         <mat-icon>{{element.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
@@ -49,10 +49,10 @@
 </table>
 <div>
   <span class="spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="prevPage()">
+  <button id="prevPage" mat-icon-button aria-label="Previous Page" (click)="prevPage()">
     <mat-icon>navigate_before</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="nextPage()">
+  <button id="nextPage" mat-icon-button aria-label="Next Page" (click)="nextPage()">
     <mat-icon>navigate_next</mat-icon>
   </button>
 </div>
