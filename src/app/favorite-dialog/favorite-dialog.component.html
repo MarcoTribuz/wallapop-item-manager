@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Wallager Favorite</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Here your favorite Items! :D</h3>
+  <app-search-field [isFavorite]="true"></app-search-field>
+  <app-table [isFavorite]="true"></app-table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>
