@@ -84,15 +84,65 @@ describe('ItemService', () => {
     expect(result).toEqual(valueExpected)
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  /*it('Slice element should be stocked in the right path Favorite', async() => {
     const valueExpected = 10
     const isFavorite = true
     service.setStartPosition(valueExpected, isFavorite)
     const result = service.getStartPosition(isFavorite)
     expect(result).toEqual(valueExpected)
+  });*/
+
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'searchItem')
+    service.switchFavorite(itemsList[0])
+    expect(test).toHaveBeenCalled();
   });
 
-  it('cazzo', async() => {
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'updateFavoriteDefaultList')
+    service.switchFavorite(itemsList[0])
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'searchFavorite')
+    service.switchFavorite(itemsList[0])
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'setSearchedValue')
+    service.search('ciao')
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'searchItem')
+    service.search('ciao')
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'searchFavorite')
+    service.searchFavorite('ciao')
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'searchItemFavorite')
+    service.searchFavorite('ciao')
+    expect(test).toHaveBeenCalled();
+  });
+
+  /*it('Slice element should be stocked in the right path  Favorite', async() => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    service.updateDashBoardBehaviourSubjects(itemsList)
+    service.setStartPosition(1)
+    service.searchItem()
+    expect(test).toHaveBeenCalled();
+  });*/
+
+  /*it('cazzo', async() => {
     const valueExpected = 10
     const isFavorite = false
     service.setStartPosition(valueExpected, isFavorite)
@@ -100,9 +150,9 @@ describe('ItemService', () => {
     service.nextPage(isFavorite)
     const test = service.getStartPosition(isFavorite)
     expect(test).toEqual(valueExpected + 5)
-  });
+  });*/
 
-  it('cazzo 1', async() => {
+  /*it('cazzo 1', async() => {
     const valueExpected = 10
     const isFavorite = true
     service.setStartPosition(valueExpected, isFavorite)
@@ -110,5 +160,5 @@ describe('ItemService', () => {
     spyOn(service, 'searchItemFavorite')
     service.nextPage(isFavorite)
     expect(service.searchItemFavorite).toHaveBeenCalled();
-  });
+  });*/
 });

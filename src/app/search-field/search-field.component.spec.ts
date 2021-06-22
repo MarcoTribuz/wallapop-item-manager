@@ -49,4 +49,12 @@ describe('SearchFieldComponent', () => {
     expect(component.search).toHaveBeenCalled();
   });
 
+  it ('should call search method 1', async () => {
+    const inputField = await loader.getHarness<MatInputHarness>(MatInputHarness);
+    spyOn(component,'search')
+    await inputField.setValue('iphone');
+    fixture.detectChanges();
+    expect(component.search).toHaveBeenCalled();
+  });
+
 });

@@ -5,6 +5,7 @@ import {HarnessLoader} from "@angular/cdk/testing";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
+import {BadgeFavoriteComponent} from "../badge-favorite/badge-favorite.component";
 
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -55,6 +56,27 @@ describe('TableComponent', () => {
   });
 
   it('should call prev method', () => {
+    fixture = TestBed.createComponent(TableComponent);
+    component = fixture.componentInstance;
+    spyOn(component, 'prevPage');
+
+    const nativeElement = fixture.nativeElement;
+    const button = nativeElement.querySelector('#prevPage');
+    button.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+    expect(component.prevPage).toHaveBeenCalled();
+  });
+
+  it('Header should change if favorite is true', () => {
+    const expectedValue = ['title', 'image', 'favorite']
+    component.isFavorite = true
+    component.ngOnInit()
+    expect(component.displayedColumns).toEqual(expectedValue)
+  });
+
+
+  it('Prev Page should be called', () => {
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     spyOn(component, 'prevPage');
