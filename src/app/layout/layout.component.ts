@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {FavoriteDialogComponent} from "../favorite-dialog/favorite-dialog.component";
 
 @Component({
   selector: 'app-layout',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  openDialog(value: boolean): void {
+    this.dialog.open(FavoriteDialogComponent, {
+      height: '600px',
+      width: '1200px',
+    });
   }
 
 }

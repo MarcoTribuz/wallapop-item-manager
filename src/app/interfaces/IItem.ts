@@ -1,5 +1,4 @@
 export interface IItem {
-  id: Number,
   title: String,
   description: String,
   price: String,

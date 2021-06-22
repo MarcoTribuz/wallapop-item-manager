@@ -25,7 +25,6 @@ export class ItemService {
   public itemsList$ = this._itemsList.asObservable()
   public favoriteItemsList$ = this._favoriteItemsList.asObservable()
   public favoriteDefaultItemsList$ = this._defaultFavoriteItemsList.asObservable()
-  public defaultItemsList$ = this._defaultItemsList.asObservable()
 
   constructor(private http: HttpClient) {
   }
@@ -97,7 +96,6 @@ export class ItemService {
         })
       }),
       tap((i: IItem[]) => {
-        console.log("items", i)
         this._itemsList.next(i.slice(0, this.itemPerPage))
         this._favoriteItemsList.next([])
         this._defaultFavoriteItemsList.next([])

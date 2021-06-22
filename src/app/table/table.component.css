@@ -1,4 +1,4 @@
-.demo-table {
+.table {
   width: 100%;
 }
 
@@ -12,10 +12,6 @@
   border-color: currentColor;
 }
 
-.demo-row-is-clicked {
-  font-weight: bold;
-}
-
 .avatar {
   vertical-align: middle;
   width: 50px;
@@ -25,5 +21,95 @@
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.mat-column-title {
+  white-space: unset !important;
+  flex: 0 0 28% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-description {
+  white-space: unset !important;
+  flex: 0 0 25% !important;
+  width: 50% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-price {
+  white-space: unset !important;
+  flex: 0 0 17% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  text-align: center;
+  justify-content:center;
+}
+
+.mat-column-email {
+  white-space: unset !important;
+  flex: 0 0 8% !important;
+  width: 20% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  text-align: center;
+  justify-content:center;
+}
+
+.mat-column-image {
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 5% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-favorite {
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 5% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
