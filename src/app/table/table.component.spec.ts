@@ -76,7 +76,6 @@ describe('TableComponent', () => {
     expect(component.displayedColumns).toEqual(expectedValue)
   });
 
-
   it('Prev Page should be called', () => {
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
@@ -88,6 +87,60 @@ describe('TableComponent', () => {
 
     fixture.detectChanges();
     expect(component.prevPage).toHaveBeenCalled();
+  });
+
+  it('item service prev page should be called', () => {
+    fixture = TestBed.createComponent(TableComponent);
+    component = fixture.componentInstance;
+    const test = spyOn(component.itemService, 'prevPage');
+
+    const nativeElement = fixture.nativeElement;
+    const button = nativeElement.querySelector('#prevPage');
+    button.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('item service next page should be called', () => {
+    fixture = TestBed.createComponent(TableComponent);
+    component = fixture.componentInstance;
+    const test = spyOn(component.itemService, 'nextPage');
+
+    const nativeElement = fixture.nativeElement;
+    const button = nativeElement.querySelector('#nextPage');
+    button.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('item service switch favorite should be called', () => {
+    fixture = TestBed.createComponent(TableComponent);
+    component = fixture.componentInstance;
+    const test = spyOn(component.itemService, 'switchFavorite');
+
+    component.switchFavourite({
+      "title": "Polaroid 635",
+      "description": "Cámara clásica de fotos Polaroid, modelo 635. Las fotos son a super color. Está en perfectas condiciones y es fantástica para coleccionistas. Se necesitan carretes instax 20 para hacer fotos. Tamaño M.",
+      "price": "50",
+      "email": "cameramail@wallapop.com",
+      "favorite": false,
+      "image": "https://frontend-tech-test-data.s3-eu-west-1.amazonaws.com/img/camera.png"
+    })
+
+    fixture.detectChanges();
+    expect(test).toHaveBeenCalled();
+  });
+
+  it('Should call sort by in service', () => {
+    fixture = TestBed.createComponent(TableComponent);
+    component = fixture.componentInstance;
+    component.isFavorite = false
+    const test = spyOn(component.itemService, 'sortBy');
+    component.sortBy('title')
+    fixture.detectChanges();
+    expect(test).toHaveBeenCalled();
   });
 
 });
