@@ -29,6 +29,10 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * Switch flag favorite
+   * @param {IItem} item - item where switch the flag
+   */
   switchFavorite(item: IItem): void {
     item.favorite = !item.favorite
     this.updateFavoriteDefaultList()
@@ -36,16 +40,27 @@ export class ItemService {
     this.searchItemFavorite()
   }
 
+  /**
+   * Search in default table
+   * @param {string} value - text to search
+   */
   search(value: string): void {
     this.setSearchedValue(value, false)
     this.searchItem()
   }
 
+  /**
+   * Search value in favorite table
+   * @param {string} value - text to search
+   */
   searchFavorite (value: string): void {
     this.setSearchedValue(value, true)
     this.searchItemFavorite()
   }
 
+  /**
+   * Search inside the default behaviour subject
+   */
   searchItem(): void {
     const itemsList = this.getDefaultItemListBS()
     const searchedValue = this.getSearchedValue(false)
@@ -57,6 +72,9 @@ export class ItemService {
     this.updateDashBoardBehaviourSubjects(slicedList)
   }
 
+  /**
+   * Search inside the favorite behaviour subject
+   */
   searchItemFavorite (): void {
     const itemsFavoriteList = this.getDefaultFavoriteItemListBS()
     const searchedValue = this.getSearchedValue(true)
@@ -68,6 +86,11 @@ export class ItemService {
     this.updateFavoriteBehaviourSubject(slicedList)
   }
 
+  /**
+   * Method to filter when a user search something
+   * @param {IItem} item - item to check
+   * @param {string} searchedValue - the string to compare
+   */
   filterFunction(item: IItem, searchedValue: string ): boolean {
     return item.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
       item.description.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
@@ -75,6 +98,10 @@ export class ItemService {
       item.email.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase())
   }
 
+  /**
+   * Update Default behaviour subject
+   * @param {IItem[]} items - items to update
+   */
   updateDashBoardBehaviourSubjects(items: IItem[]) {
     this.setItemListBS(items)
     const defaultItemsList = this.getDefaultItemListBS()
@@ -82,8 +109,8 @@ export class ItemService {
   }
 
   /**
-   *
-   * @param items
+   * Update the favorite Behaviour subject
+   * @param {IItem[]} items - items to update
    */
   updateFavoriteBehaviourSubject(items: IItem[]) {
     const itemsList = this.getDefaultItemListBS()
