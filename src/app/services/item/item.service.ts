@@ -165,29 +165,20 @@ export class ItemService {
     isFavorite ? this.searchItemFavorite() : this.searchItem()
   }
 
-  sortBy(sortType: string, isFavorite: boolean): void {
+  sortBy(sortType: 'title' | 'description' | 'email' | 'price', isFavorite: boolean, isAscending: boolean): void {
     const itemsList = this.getDefaultItemListBS()
     const searchedValue = this.getSearchedValue(isFavorite)
     const filteredFavorite = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue))
     let sortedList: IItem[] = []
-    switch (sortType) {
-      case 'title' : {
-        sortedList = filteredFavorite.sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0)
-        break
-      }
-      case 'description' : {
-        sortedList = filteredFavorite.sort((a, b) => a.description < b.description ? -1 : a.description > b.description ? 1 : 0)
-        break
-      }
-      case 'email' : {
-        sortedList = filteredFavorite.sort((a, b) => a.email < b.email ? -1 : a.email > b.email ? 1 : 0)
-        break
-      }
-      case 'price' : {
-        sortedList = filteredFavorite.sort((a, b) => parseInt(a.price) < parseInt(b.price) ? -1 : parseInt(a.price) > parseInt(b.price) ? 1 : 0)
-        break
-      }
-    }
+
+    if (isAscending) sortedList = filteredFavorite.sort((a, b) =>{
+      if (sortType !== 'price') return a[sortType] < b[sortType] ? -1 : a[sortType] > b[sortType] ? 1 : 0
+      else return parseInt(a[sortType]) < parseInt(b[sortType]) ? -1 : parseInt(a[sortType]) > parseInt(b[sortType]) ? 1 : 0
+    })
+    else sortedList = filteredFavorite.sort((a, b) => {
+      if (sortType !== 'price') return a[sortType] < b[sortType] ? 1 : a[sortType] > b[sortType] ? -1 : 0
+      else return parseInt(a[sortType]) < parseInt(b[sortType]) ? 1 : parseInt(a[sortType]) > parseInt(b[sortType]) ? -1 : 0
+    })
 
     const startPosition = this.getStartPosition(false)
     if (startPosition >= itemsList.length || startPosition < 0) return
@@ -195,8 +186,6 @@ export class ItemService {
     const slicedList = sortedList.slice(startPosition, startPosition + itemsPerPage)
 
     this.updateDashBoardBehaviourSubjects(slicedList)
-
-    console.log("sort", sortedList)
   }
 
   /**

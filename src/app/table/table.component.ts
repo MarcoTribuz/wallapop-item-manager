@@ -12,6 +12,10 @@ export class TableComponent implements OnInit {
   @Input() isFavorite: boolean = false;
   items: IItem[] = [];
   displayedColumns: string[] = []
+  title: boolean = false
+  email: boolean = false
+  description: boolean = false
+  price: boolean = false
 
   constructor(public itemService: ItemService) {
   }
@@ -22,7 +26,7 @@ export class TableComponent implements OnInit {
       this.itemService.favoriteItemsList$.subscribe((items: IItem[]) => {
         this.items = items
       })
-    } else{
+    } else {
       this.displayedColumns = ['title', 'description', 'price', 'email', 'image', 'favorite']
       this.itemService.itemsList$.subscribe((items: IItem[]) => {
         this.items = items
@@ -43,7 +47,14 @@ export class TableComponent implements OnInit {
     this.itemService.prevPage(this.isFavorite)
   }
 
-  sortBy(sortType: string) {
-    if (!this.isFavorite) this.itemService.sortBy(sortType, false)
+  sortBy(sortType: 'title' | 'description' | 'email' | 'price') {
+    if (!this.isFavorite) {
+      let isAscending: boolean
+
+      this[sortType] = !this[sortType]
+      isAscending = this[sortType]
+
+      this.itemService.sortBy(sortType, false, isAscending)
+    }
   }
 }
