@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {IItems} from "../../interfaces/IItems";
@@ -29,7 +29,6 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
-  //todo catch error
   switchFavorite(item: IItem): void {
     item.favorite = !item.favorite
     this.updateFavoriteDefaultList()
@@ -100,7 +99,7 @@ export class ItemService {
     if (itemsList.length > 0) return
     this.http.get<IItems>(this.itemsUrl).pipe(
       map((iList: IItems) => {
-        return iList.items.map((i: IItem, index) => {
+        return iList.items.map((i: IItem) => {
           return {...i, favorite: false}
         })
       }),
@@ -111,6 +110,7 @@ export class ItemService {
         this.setDefaultFavoriteItemListBS([])
         this.setDefaultItemListBS(i)
       }),
+      catchError(this.handleError<IItem[]>('fetchItems', []))
     ).subscribe()
   }
 
@@ -129,6 +129,17 @@ export class ItemService {
     if (start === 0) return
     this.setStartPosition(start - itemPerPage, isFavorite)
     isFavorite ? this.searchItemFavorite() : this.searchItem()
+  }
+
+  /*
+     Handle error
+   */
+  private handleError<T>(result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error); // log to console instead
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
   /*
