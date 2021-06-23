@@ -16,7 +16,6 @@ export class LayoutComponent implements OnInit {
 
   openDialog(value: boolean): void {
     this.dialog.open(FavoriteDialogComponent, {
-      height: '600px',
       width: '1200px',
     });
   }
