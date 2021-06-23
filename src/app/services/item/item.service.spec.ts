@@ -92,43 +92,43 @@ describe('ItemService', () => {
     expect(result).toEqual(valueExpected)
   });*/
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  it('SearchItem function should be called', async() => {
     const test = spyOn(service, 'searchItem')
     service.switchFavorite(itemsList[0])
     expect(test).toHaveBeenCalled();
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  it('updateFavoriteDefaultList function should be called', async() => {
     const test = spyOn(service, 'updateFavoriteDefaultList')
     service.switchFavorite(itemsList[0])
     expect(test).toHaveBeenCalled();
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
-    const test = spyOn(service, 'searchFavorite')
+  it('searchItemFavorite function should be called', async() => {
+    const test = spyOn(service, 'searchItemFavorite')
     service.switchFavorite(itemsList[0])
     expect(test).toHaveBeenCalled();
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  it('setSearchedValue function should be called', async() => {
     const test = spyOn(service, 'setSearchedValue')
     service.search('ciao')
     expect(test).toHaveBeenCalled();
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  it('searchItem function should be called', async() => {
     const test = spyOn(service, 'searchItem')
     service.search('ciao')
     expect(test).toHaveBeenCalled();
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  it('searchFavorite function should be called', async() => {
     const test = spyOn(service, 'searchFavorite')
     service.searchFavorite('ciao')
     expect(test).toHaveBeenCalled();
   });
 
-  it('Slice element should be stocked in the right path  Favorite', async() => {
+  it('searchItemFavorite function should be called', async() => {
     const test = spyOn(service, 'searchItemFavorite')
     service.searchFavorite('ciao')
     expect(test).toHaveBeenCalled();
@@ -142,23 +142,21 @@ describe('ItemService', () => {
     expect(test).toHaveBeenCalled();
   });*/
 
-  /*it('cazzo', async() => {
-    const valueExpected = 10
+  it('Search item should be called after next page call', async() => {
+    const test = spyOn(service, 'searchItem')
     const isFavorite = false
-    service.setStartPosition(valueExpected, isFavorite)
-    service.updateDashBoardBehaviourSubjects(itemsList)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
     service.nextPage(isFavorite)
-    const test = service.getStartPosition(isFavorite)
-    expect(test).toEqual(valueExpected + 5)
-  });*/
+    expect(test).toHaveBeenCalled()
+  });
 
-  /*it('cazzo 1', async() => {
-    const valueExpected = 10
-    const isFavorite = true
-    service.setStartPosition(valueExpected, isFavorite)
-    service.updateDashBoardBehaviourSubjects(itemsList)
-    spyOn(service, 'searchItemFavorite')
-    service.nextPage(isFavorite)
-    expect(service.searchItemFavorite).toHaveBeenCalled();
-  });*/
+  it('Search item should be called after next page call', async() => {
+    const test = spyOn(service, 'searchItem')
+    const isFavorite = false
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.prevPage(isFavorite)
+    expect(test).toHaveBeenCalled()
+  });
 });

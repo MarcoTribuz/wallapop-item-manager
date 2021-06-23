@@ -171,12 +171,12 @@ export class ItemService {
     return this.itemsPerPage
   }
 
-  setSearchedValue(value: string, isFavorite: boolean = false): void {
+  setSearchedValue(value: string, isFavorite: boolean): void {
     if (isFavorite) this.searchedValueFavorite = value
     else this.searchedValueDashboard = value
   }
 
-  getSearchedValue(isFavorite: boolean = false): string {
+  getSearchedValue(isFavorite: boolean): string {
     return isFavorite ? this.searchedValueFavorite : this.searchedValueDashboard
   }
 
@@ -184,7 +184,7 @@ export class ItemService {
     return isFavorite ? this.startPositionFavorite : this.startPositionDashboard
   }
 
-  setStartPosition(startPosition: number, isFavorite: boolean = false): void {
+  setStartPosition(startPosition: number, isFavorite: boolean): void {
     if (isFavorite) this.startPositionFavorite = startPosition
     else this.startPositionDashboard = startPosition
   }
