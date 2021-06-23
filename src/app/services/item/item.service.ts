@@ -166,7 +166,7 @@ export class ItemService {
   }
 
   sortBy(sortType: string, isFavorite: boolean): void {
-    const itemsList = isFavorite ? this.getDefaultFavoriteItemListBS() : this.getDefaultItemListBS()
+    const itemsList = this.getDefaultItemListBS()
     const searchedValue = this.getSearchedValue(isFavorite)
     const filteredFavorite = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue))
     let sortedList: IItem[] = []
