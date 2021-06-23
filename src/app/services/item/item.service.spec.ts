@@ -56,7 +56,7 @@ describe('ItemService', () => {
   });
 
   it('Get Item per page should return 5', async() => {
-    const itemsPerPage = service.getItemPerPage()
+    const itemsPerPage = service.getItemsPerPage()
     expect(itemsPerPage).toEqual(5)
   });
 
