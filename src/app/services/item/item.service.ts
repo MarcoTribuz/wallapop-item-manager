@@ -81,6 +81,10 @@ export class ItemService {
     this.setDefaultItemListBS(defaultItemsList)
   }
 
+  /**
+   *
+   * @param items
+   */
   updateFavoriteBehaviourSubject(items: IItem[]) {
     const itemsList = this.getDefaultItemListBS()
     const favorite = itemsList.filter((i: IItem) => i.favorite)
@@ -88,12 +92,18 @@ export class ItemService {
     this.setDefaultFavoriteItemListBS(favorite)
   }
 
+  /**
+   * Update the favorite default behaviour subject
+   */
   updateFavoriteDefaultList(): void {
     const itemsList = this.getDefaultItemListBS()
     const favorite = itemsList.filter((i: IItem) => i.favorite)
     this.setDefaultFavoriteItemListBS(favorite)
   }
 
+  /**
+   * Entry point
+   */
   fetchItems(): void {
     const itemsList = this.getDefaultItemListBS()
     if (itemsList.length > 0) return
@@ -114,6 +124,10 @@ export class ItemService {
     ).subscribe()
   }
 
+  /**
+   * To the next five items
+   * @param {boolean} isFavorite - if is an operation from the favorite table
+   */
   nextPage(isFavorite: boolean): void {
     const start = this.getStartPosition(isFavorite)
     const itemPerPage = this.getItemsPerPage()
@@ -123,6 +137,10 @@ export class ItemService {
     isFavorite ? this.searchItemFavorite() : this.searchItem()
   }
 
+  /**
+   * To the previous 5 items
+   * @param {boolean} isFavorite - if is an operation from the favorite table
+   */
   prevPage(isFavorite: boolean): void {
     const start = this.getStartPosition(isFavorite)
     const itemPerPage = this.getItemsPerPage()
@@ -131,13 +149,9 @@ export class ItemService {
     isFavorite ? this.searchItemFavorite() : this.searchItem()
   }
 
-  /*
-     Handle error
-   */
-  private handleError<T>(result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error); // log to console instead
-      // Let the app keep running by returning an empty result.
+      console.error(error, operation);
       return of(result as T);
     };
   }
