@@ -184,7 +184,7 @@ export class ItemService {
         break
       }
       case 'price' : {
-        sortedList = filteredFavorite.sort((a, b) => a.price < b.price ? -1 : a.price > b.price ? 1 : 0)
+        sortedList = filteredFavorite.sort((a, b) => parseInt(a.price) < parseInt(b.price) ? -1 : parseInt(a.price) > parseInt(b.price) ? 1 : 0)
         break
       }
     }
