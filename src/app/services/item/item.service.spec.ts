@@ -123,14 +123,6 @@ describe('ItemService', () => {
     expect(result).toEqual(valueExpected)
   });
 
-  /*it('Slice element should be stocked in the right path Favorite', async() => {
-    const valueExpected = 10
-    const isFavorite = true
-    service.setStartPosition(valueExpected, isFavorite)
-    const result = service.getStartPosition(isFavorite)
-    expect(result).toEqual(valueExpected)
-  });*/
-
   it('SearchItem function should be called', async () => {
     const test = spyOn(service, 'searchItem')
     service.switchFavorite(itemsList[0])
@@ -228,4 +220,93 @@ describe('ItemService', () => {
     service.prevPage(isFavorite)
     expect(test).toHaveBeenCalled()
   });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by title descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = false
+    service.setSearchedValue('ciao', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('title', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by price descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = false
+    service.setSearchedValue('ciao', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('price', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by title descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = true
+    service.setSearchedValue('ciao', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('title', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by price descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = true
+    service.setSearchedValue('ciao', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('price', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by title descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = false
+    service.setSearchedValue('', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('title', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by price descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = false
+    service.setSearchedValue('', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('price', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by title descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = true
+    service.setSearchedValue('', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('title', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
+  it('updateDashBoardBehaviourSubjects should be called after sorting by price descending', async () => {
+    const test = spyOn(service, 'updateDashBoardBehaviourSubjects')
+    const isFavorite = false
+    const isAscending = true
+    service.setSearchedValue('', isFavorite)
+    service.setStartPosition(5, isFavorite)
+    service.setDefaultItemListBS(itemsList)
+    service.sortBy('price', isFavorite, isAscending)
+    expect(test).toHaveBeenCalled()
+  });
+
 });

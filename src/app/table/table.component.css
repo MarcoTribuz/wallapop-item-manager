@@ -12,6 +12,10 @@
   border-color: currentColor;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .avatar {
   vertical-align: middle;
   width: 50px;
