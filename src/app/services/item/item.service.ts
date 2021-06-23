@@ -29,7 +29,7 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
-
+  //todo catch error
   switchFavorite(item: IItem): void {
     item.favorite = !item.favorite
     this.updateFavoriteDefaultList()
