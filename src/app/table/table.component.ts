@@ -1,37 +1,34 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IItem} from "../interfaces/IItem";
 import {ItemService} from "../services/item/item.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit {
 
   @Input() isFavorite: boolean = false;
   items: IItem[] = [];
-
   displayedColumns: string[] = []
 
   constructor(public itemService: ItemService) {
   }
 
   ngOnInit(): void {
-    this.isFavorite ? this.displayedColumns = ['title', 'image', 'favorite'] : this.displayedColumns = ['title', 'description', 'price', 'email', 'image', 'favorite'];
-    if (this.isFavorite)
+    if (this.isFavorite) {
+      this.displayedColumns = ['title', 'image', 'favorite']
       this.itemService.favoriteItemsList$.subscribe((items: IItem[]) => {
         this.items = items
       })
-    else
+    } else{
+      this.displayedColumns = ['title', 'description', 'price', 'email', 'image', 'favorite']
       this.itemService.itemsList$.subscribe((items: IItem[]) => {
         this.items = items
       })
+    }
     this.itemService.fetchItems()
-  }
-
-  ngOnDestroy(): void {
   }
 
   switchFavourite(item: IItem): void {
@@ -44,5 +41,10 @@ export class TableComponent implements OnInit, OnDestroy {
 
   prevPage(): void {
     this.itemService.prevPage(this.isFavorite)
+  }
+
+  cazzo() {
+    console.log("cazzo")
+    this.itemService.sortBy('ciao', this.isFavorite)
   }
 }

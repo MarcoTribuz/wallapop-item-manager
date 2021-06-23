@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, filter, map, tap} from 'rxjs/operators';
 import {IItems} from "../../interfaces/IItems";
 import {IItem} from "../../interfaces/IItem";
 
@@ -11,10 +11,11 @@ import {IItem} from "../../interfaces/IItem";
 
 export class ItemService {
 
-  private _itemsList: BehaviorSubject<any> = new BehaviorSubject([]);
-  private _favoriteItemsList: BehaviorSubject<any> = new BehaviorSubject([]);
-  private _defaultFavoriteItemsList: BehaviorSubject<any> = new BehaviorSubject([]);
-  private _defaultItemsList: BehaviorSubject<any> = new BehaviorSubject([]);
+  defaultValue: IItem[] = []
+  private _itemsList: BehaviorSubject<IItem[]> = new BehaviorSubject(this.defaultValue);
+  private _favoriteItemsList: BehaviorSubject<IItem[]> = new BehaviorSubject(this.defaultValue);
+  private _defaultFavoriteItemsList: BehaviorSubject<IItem[]> = new BehaviorSubject(this.defaultValue);
+  private _defaultItemsList: BehaviorSubject<IItem[]> = new BehaviorSubject(this.defaultValue);
   private itemsPerPage: number = 5
   private startPositionDashboard: number = 0
   private startPositionFavorite: number = 0
@@ -162,6 +163,13 @@ export class ItemService {
     if (start >= itemsList.length || (start + itemPerPage) >= itemsList.length) return
     this.setStartPosition(start + itemPerPage, isFavorite)
     isFavorite ? this.searchItemFavorite() : this.searchItem()
+  }
+
+  sortBy(sortType: string, isFavorite: boolean): void {
+    const itemsFavoriteList = this.getDefaultItemListBS()
+    const searchedValue = this.getSearchedValue(true)
+    const filteredFavorite = searchedValue === '' ? itemsFavoriteList.sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0) : itemsFavoriteList.filter((it: IItem) => this.filterFunction(it, searchedValue)).sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0)
+    console.log("sort", filteredFavorite)
   }
 
   /**
