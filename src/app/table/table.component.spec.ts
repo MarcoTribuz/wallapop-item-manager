@@ -6,6 +6,7 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
 import {BadgeFavoriteComponent} from "../badge-favorite/badge-favorite.component";
+import {MatTableModule} from "@angular/material/table";
 
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -18,6 +19,7 @@ describe('TableComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        MatTableModule
       ],
       declarations: [ TableComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

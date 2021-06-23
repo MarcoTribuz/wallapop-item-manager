@@ -52,7 +52,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatPaginatorModule,
         MatBadgeModule,
         MatDialogModule,
-        MatTooltipModule,
+        MatTooltipModule
     ],
   providers: [],
   bootstrap: [AppComponent]
