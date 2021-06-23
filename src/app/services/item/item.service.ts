@@ -54,7 +54,7 @@ export class ItemService {
    * Search value in favorite table
    * @param {string} value - text to search
    */
-  searchFavorite (value: string): void {
+  searchFavorite(value: string): void {
     this.setSearchedValue(value, true)
     this.searchItemFavorite()
   }
@@ -76,7 +76,7 @@ export class ItemService {
   /**
    * Search inside the favorite behaviour subject
    */
-  searchItemFavorite (): void {
+  searchItemFavorite(): void {
     const itemsFavoriteList = this.getDefaultFavoriteItemListBS()
     const searchedValue = this.getSearchedValue(true)
     const filteredFavorite = searchedValue === '' ? itemsFavoriteList : itemsFavoriteList.filter((it: IItem) => this.filterFunction(it, searchedValue))
@@ -92,7 +92,7 @@ export class ItemService {
    * @param {IItem} item - item to check
    * @param {string} searchedValue - the string to compare
    */
-  filterFunction(item: IItem, searchedValue: string ): boolean {
+  filterFunction(item: IItem, searchedValue: string): boolean {
     return item.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
       item.description.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
       item.price.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
@@ -166,10 +166,37 @@ export class ItemService {
   }
 
   sortBy(sortType: string, isFavorite: boolean): void {
-    const itemsFavoriteList = this.getDefaultItemListBS()
-    const searchedValue = this.getSearchedValue(true)
-    const filteredFavorite = searchedValue === '' ? itemsFavoriteList.sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0) : itemsFavoriteList.filter((it: IItem) => this.filterFunction(it, searchedValue)).sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0)
-    console.log("sort", filteredFavorite)
+    const itemsList = isFavorite ? this.getDefaultFavoriteItemListBS() : this.getDefaultItemListBS()
+    const searchedValue = this.getSearchedValue(isFavorite)
+    const filteredFavorite = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue))
+    let sortedList: IItem[] = []
+    switch (sortType) {
+      case 'title' : {
+        sortedList = filteredFavorite.sort((a, b) => a.title < b.title ? -1 : a.title > b.title ? 1 : 0)
+        break
+      }
+      case 'description' : {
+        sortedList = filteredFavorite.sort((a, b) => a.description < b.description ? -1 : a.description > b.description ? 1 : 0)
+        break
+      }
+      case 'email' : {
+        sortedList = filteredFavorite.sort((a, b) => a.email < b.email ? -1 : a.email > b.email ? 1 : 0)
+        break
+      }
+      case 'price' : {
+        sortedList = filteredFavorite.sort((a, b) => a.price < b.price ? -1 : a.price > b.price ? 1 : 0)
+        break
+      }
+    }
+
+    const startPosition = this.getStartPosition(false)
+    if (startPosition >= itemsList.length || startPosition < 0) return
+    const itemsPerPage = this.getItemsPerPage()
+    const slicedList = sortedList.slice(startPosition, startPosition + itemsPerPage)
+
+    this.updateDashBoardBehaviourSubjects(slicedList)
+
+    console.log("sort", sortedList)
   }
 
   /**
@@ -207,7 +234,7 @@ export class ItemService {
     this._favoriteItemsList.next(items)
   }
 
-  getFavoriteItemListBS(): IItem[]{
+  getFavoriteItemListBS(): IItem[] {
     return this._favoriteItemsList.getValue()
   }
 

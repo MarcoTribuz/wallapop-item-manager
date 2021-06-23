@@ -43,8 +43,7 @@ export class TableComponent implements OnInit {
     this.itemService.prevPage(this.isFavorite)
   }
 
-  cazzo() {
-    console.log("cazzo")
-    this.itemService.sortBy('ciao', this.isFavorite)
+  sortBy(sortType: string) {
+    if (!this.isFavorite) this.itemService.sortBy(sortType, false)
   }
 }
