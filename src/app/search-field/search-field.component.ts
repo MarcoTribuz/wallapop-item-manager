@@ -10,7 +10,7 @@ export class SearchFieldComponent implements OnInit {
 
   @Input() isFavorite: boolean = false;
 
-  constructor(private itemService: ItemService) { }
+  constructor(public itemService: ItemService) { }
 
   ngOnInit(): void {
   }

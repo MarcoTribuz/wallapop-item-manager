@@ -41,12 +41,10 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit open dialog on click', async () => {
+  it('should emit open', async () => {
     fixture = TestBed.createComponent(BadgeFavoriteComponent);
-    component = fixture.componentInstance;
-    spyOn(component.openDialogEvent, 'emit');
+    const test = spyOn(component.openDialogEvent, 'emit');
     component.openDialog(true)
-    fixture.detectChanges();
-    expect(component.openDialogEvent.emit).toHaveBeenCalled();
+    expect(test).toHaveBeenCalled();
   });
 });

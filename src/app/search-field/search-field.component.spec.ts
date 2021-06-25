@@ -43,18 +43,24 @@ describe('SearchFieldComponent', () => {
 
   it ('should call search method', async () => {
     const inputField = await loader.getHarness<MatInputHarness>(MatInputHarness);
-    spyOn(component,'search')
+    const test = spyOn(component,'search')
     await inputField.setValue('iphone');
     fixture.detectChanges();
-    expect(component.search).toHaveBeenCalled();
+    expect(test).toHaveBeenCalled();
   });
 
-  it ('should call search method 1', async () => {
-    const inputField = await loader.getHarness<MatInputHarness>(MatInputHarness);
-    spyOn(component,'search')
-    await inputField.setValue('iphone');
-    fixture.detectChanges();
-    expect(component.search).toHaveBeenCalled();
+  it ('should call search item service', async () => {
+    const test = spyOn(component.itemService,'search')
+    component.isFavorite = false
+    component.search('iphone')
+    expect(test).toHaveBeenCalled();
+  });
+
+  it ('should call search item favorite service', async () => {
+    const test = spyOn(component.itemService,'searchItemFavorite')
+    component.isFavorite = true
+    component.search('iphone')
+    expect(test).toHaveBeenCalled();
   });
 
 });
