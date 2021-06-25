@@ -65,7 +65,7 @@ export class ItemService {
   searchItem(): void {
     const itemsList = this.getDefaultItemListBS()
     const searchedValue = this.getSearchedValue(false)
-    const filtered = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue))
+    const filtered = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue, false))
     const startPosition = this.getStartPosition(false)
     if (startPosition >= itemsList.length || startPosition < 0) return
     const itemsPerPage = this.getItemsPerPage()
@@ -79,7 +79,7 @@ export class ItemService {
   searchItemFavorite(): void {
     const itemsFavoriteList = this.getDefaultFavoriteItemListBS()
     const searchedValue = this.getSearchedValue(true)
-    const filteredFavorite = searchedValue === '' ? itemsFavoriteList : itemsFavoriteList.filter((it: IItem) => this.filterFunction(it, searchedValue))
+    const filteredFavorite = searchedValue === '' ? itemsFavoriteList : itemsFavoriteList.filter((it: IItem) => this.filterFunction(it, searchedValue, true))
     const startPosition = this.getStartPosition(true)
     if (startPosition > itemsFavoriteList.length || startPosition < 0) return
     const itemsPerPage = this.getItemsPerPage()
@@ -91,9 +91,11 @@ export class ItemService {
    * Method to filter when a user search something
    * @param {IItem} item - item to check
    * @param {string} searchedValue - the string to compare
+   * @param {boolean} isFavorite - if the search will perform on title (favorite) or title, description, price, email (not favorite)
    */
-  filterFunction(item: IItem, searchedValue: string): boolean {
-    return item.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
+  filterFunction(item: IItem, searchedValue: string, isFavorite: boolean): boolean {
+    if (isFavorite) return item.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase())
+    else return item.title.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
       item.description.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
       item.price.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase()) ||
       item.email.toLocaleLowerCase().includes(searchedValue.toLocaleLowerCase())
@@ -168,7 +170,7 @@ export class ItemService {
   sortBy(sortType: 'title' | 'description' | 'email' | 'price', isFavorite: boolean, isAscending: boolean): void {
     const itemsList = this.getDefaultItemListBS()
     const searchedValue = this.getSearchedValue(isFavorite)
-    const filteredFavorite = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue))
+    const filteredFavorite = searchedValue === '' ? itemsList : itemsList.filter((it: IItem) => this.filterFunction(it, searchedValue, isFavorite))
     let sortedList: IItem[] = []
 
     if (isAscending) sortedList = filteredFavorite.sort((a, b) =>{
