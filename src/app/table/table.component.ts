@@ -50,11 +50,17 @@ export class TableComponent implements OnInit {
   sortBy(sortType: 'title' | 'description' | 'email' | 'price') {
     if (!this.isFavorite) {
       let isAscending: boolean
-
+      this.resetSortTypeVariable()
       this[sortType] = !this[sortType]
       isAscending = this[sortType]
 
       this.itemService.sortBy(sortType, false, isAscending)
     }
+  }
+  resetSortTypeVariable(){
+    this.title = false
+    this.description = false
+    this.price = false
+    this.email = false
   }
 }

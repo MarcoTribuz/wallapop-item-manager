@@ -14,6 +14,7 @@
 
 .text-bold {
   font-weight: bold;
+  font-style: italic;
 }
 
 .avatar {
