@@ -1,4 +1,4 @@
-# Wallapop Angular Test - Item Manager
+# Wallateger - The Wallapop item manager
 ## Development server
 
 To correctly view the application, first run `npm install` in the root of project, then run `ng serve` for a dev server and navigate to `http://localhost:4200/`.
